@@ -23,10 +23,9 @@ print(r" \_____\____/|_|  |_|_|         |_|  |_|  |_|_____|_| \_|_|\_\_____|_| \
 
 print(f"This codespace belongs to {name}")
 print("\n\n")
-                                                                                          
-                                                                                          
-                                  
-print("Now it's your turn:")
+                            
+
+                            
 print(name+" is bored.")
 print(name+" prefers micro")
 print(name+" prefers vi")        
