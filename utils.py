@@ -1,15 +1,18 @@
-import turtle
-import math 
-import time
+import math
 import random
+import time
+import turtle
+
+
 def set_background(image_filename):
     screen = turtle.Screen()
     if image_filename.endswith(".gif"):
         image_filename = image_filename[:-4]
     try:
         screen.bgpic(f"./Backgrounds/{image_filename}.png")
-    except:
+    except Exception:
         screen.bgpic(f"./Backgrounds/{image_filename}.gif")
+
 
 def set_image(sprite, image_filename):
     if image_filename.endswith(".gif"):
@@ -20,29 +23,32 @@ def set_image(sprite, image_filename):
     screen.register_shape(image_file)
     sprite.shape(image_file)
 
+
 def create_sprite(image_filename, x=0, y=0):
     sprite = turtle.Turtle()
     set_image(sprite, image_filename)
     sprite.penup()
-    sprite.goto(x,y)
+    sprite.goto(x, y)
     window.update()
     return sprite
+
 
 def get_distance(s1, s2):
     dx = s1.xcor() - s2.xcor()
     dy = s1.ycor() - s2.ycor()
-    return math.sqrt(dx*dx + dy*dy)
+    return math.sqrt(dx * dx + dy * dy)
 
-def draw_rectangle(cx=0,cy=0,width=100,height=100,color="black",filled=True):
+
+def draw_rectangle(cx=0, cy=0, width=100, height=100, color="black", filled=True):
     sprite = turtle.Turtle()
     sprite.hideturtle()
     sprite.setheading(0)
     sprite.color(color)
     sprite.penup()
-    
-    w2 = width/2
-    h2 = height/2
-    sprite.goto(cx-w2,cy+h2)
+
+    w2 = width / 2
+    h2 = height / 2
+    sprite.goto(cx - w2, cy + h2)
 
     sprite.pendown()
     if filled:
