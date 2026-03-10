@@ -1,4 +1,7 @@
-import turtle, math, time, random
+import turtle
+import math 
+import time
+import random
 def set_background(image_filename):
     screen = turtle.Screen()
     if image_filename.endswith(".gif"):
