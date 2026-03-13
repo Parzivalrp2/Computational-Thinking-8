@@ -1,6 +1,6 @@
 import time as t
 import sys
-def clear():
+def clear(): # clears current line and creates a newline
     print ('\033[1A' + '\033[K')
 
 print("unnamed~> what is your name?")
@@ -16,7 +16,7 @@ print(f"{name}~> what country do you live in?")
 country = input(">>")
 clear()
 print(f"{username}~> {country}")
-print(f"{name}~> cool! whats it like there?")
+print(f"{name}~> you live in {country}? cool! whats it like there?")
 input(">>")
 clear()
 sys.stdout.write(f"{name}~> interesting.")
