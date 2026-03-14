@@ -1,22 +1,26 @@
+import getpass
 import hashlib
-import os
 import secrets
 import socket
 import struct
 import threading
 
-from dotenv import load_dotenv
+import keyring
 from pyserpent import Serpent, serpent_cbc_decrypt, serpent_cbc_encrypt
 
-load_dotenv()
-
-permakeyenv = os.getenv("KEY")
-if permakeyenv is None:
-    raise Exception(
-        "create a .env file in the root directory and define a 'KEY' variable to a random value (can be created using head -c 256 /dev/urandom | base64 on linux), otherwise get one from your peer"
-    )
+service = "peermsg"
+username = getpass.getuser()
+if input("Input Random Key y/n:") == "y":
+    permakey = input("Input Key:")
+    keyring.set_password("peermsg", getpass.getuser(), permakey)
+    print("Stored encryption key in keyring.")
 else:
-    permakey = permakeyenv
+    print("Attempting to retrieve key from keyring...")
+    permakey = keyring.get_password("peermsg", getpass.getuser())
+    if permakey is not None:
+        print("Successfully retrieved key.")
+    else:
+        raise Exception("Failed to retrieve key.")
 port = int(input("Select communication port:"))
 conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 peerip = None

@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['Computational-Thinking-8/peermsg.py'],
+    ['/home/parzival/CT8/Computational-Thinking-8/peermsg/peermsg.py'],
     pathex=[],
     binaries=[],
     datas=[],
