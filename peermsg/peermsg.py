@@ -4,27 +4,17 @@ import secrets
 import socket
 import struct
 import threading
-
+import time
 import keyring
+
 from pyserpent import Serpent, serpent_cbc_decrypt, serpent_cbc_encrypt
 
-service = "peermsg"
-username = getpass.getuser()
-if input("Input Random Key y/n:") == "y":
-    permakey = input("Input Key:")
-    keyring.set_password("peermsg", getpass.getuser(), permakey)
-    print("Stored encryption key in keyring.")
-else:
-    print("Attempting to retrieve key from keyring...")
-    permakey = keyring.get_password("peermsg", getpass.getuser())
-    if permakey is not None:
-        print("Successfully retrieved key.")
-    else:
-        raise Exception("Failed to retrieve key.")
-port = int(input("Select communication port:"))
+peerip: str | None = None
+permakey: str | None = None
+port: int | None = None
+newmessage = False
 conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-peerip = None
-
+messages = []
 
 def sender():
     global conn
@@ -34,14 +24,15 @@ def sender():
         peerIpIn = "0.0.0.0"
     if peerip is None:
         peerip = peerIpIn
-    connect(peerip)
+    connect()
     while True:
         message = input(">>")
         send(message)
 
 
-def connect(peerip):
+def connect():
     global conn
+    global peerip
     conn.connect((peerip, port))
     print(f"Connected to: {peerip}")
 
@@ -56,31 +47,6 @@ def pack(salt, iv, encmessage):
         encmessage,
     ]
     return b"".join(parts)
-
-
-def unpack(blob):
-    i = 0
-
-    def read_len():
-        nonlocal i
-        if i + 4 > len(blob):
-            raise ValueError("truncated")
-        L = struct.unpack(">I", blob[i : i + 4])[0]
-        i += 4
-        return L
-
-    def read_bytes(L):
-        nonlocal i
-        if i + L > len(blob):
-            raise ValueError("truncated")
-        v = blob[i : i + L]
-        i += L
-        return v
-
-    salt = read_bytes(read_len())
-    iv = read_bytes(read_len())
-    encmessage = read_bytes(read_len())
-    return salt, iv, encmessage
 
 
 def recv_exact(sock, n):
@@ -118,7 +84,7 @@ def send(unencmessage):
     conn.sendall(blob)
 
 
-def reciever():
+def recievercli():
     global peerip
     global permakey
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -139,10 +105,64 @@ def reciever():
             unencmessage = decrypt(salt, iv, encmessage).decode()
             print(f"\n{peerip}~> {unencmessage}")
 
+def recievergui():
+    global peerip
+    global permakey
+    global port
+    global newmessage
+    while True:
+        time.sleep(5)
+        if port is not None and peerip is not None and permakey is not None:
+            print("starting reciever")
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            s.bind(("0.0.0.0", port))
+            s.listen()
+            peersocket, peeraddr = s.accept()
+            with peersocket:
+                peerip = peeraddr[0]
+                while True:
+                    salt_len = struct.unpack(">I", recv_exact(peersocket, 4))[0]
+                    salt = recv_exact(peersocket, salt_len)
+                    iv_len = struct.unpack(">I", recv_exact(peersocket, 4))[0]
+                    iv = recv_exact(peersocket, iv_len)
+                    encmessage_len = struct.unpack(">I", recv_exact(peersocket, 4))[0]
+                    encmessage = recv_exact(peersocket, encmessage_len)
+                    unencmessage = decrypt(salt, iv, encmessage).decode()
+                    messages.append(unencmessage)
+                    newmessage = True
+                    print(messages)
 
-sendT = threading.Thread(target=sender)
-recieveT = threading.Thread(target=reciever)
+def main():
+    global permakey
+    global port
+    global conn
+    global peerip
+    service = "peermsg"
+    username = getpass.getuser()
+    if input("Input Random Key y/n:") == "y":
+        permakey = input("Input Key:")
+        keyring.set_password(service, username, permakey)
+        print("Stored encryption key in keyring.")
+    else:
+        print("Attempting to retrieve key from keyring...")
+        permakey = keyring.get_password(service, username)
+        if permakey is not None:
+            print("Successfully retrieved key.")
+        else:
+            raise Exception("Failed to retrieve key.")
+    port = int(input("Select communication port:"))
+    if port == "":
+        port = 7080
+    else:
+        port = port
+
+    sendT = threading.Thread(target=sender)
+    recieveT = threading.Thread(target=recievercli)
+
+    recieveT.start()
+    sendT.start()
 
 
-recieveT.start()
-sendT.start()
+if __name__ == "__main__":
+    main()

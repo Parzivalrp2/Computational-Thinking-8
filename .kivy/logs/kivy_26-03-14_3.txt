@@ -1,0 +1,25 @@
+[INFO   ] Logger: Record log in /home/parzival/CT8/Computational-Thinking-8/.kivy/logs/kivy_26-03-14_3.txt
+[WARNING] Kivy: KIVY_DESKTOP_PATH_ID not set. If your application targets desktop platforms, set it to provide a user-friendly application name for directories. See https://kivy.org/doc/stable/guide/environment.html
+[INFO   ] Kivy: v3.0.0.dev0
+[INFO   ] Kivy: Installed at "/home/parzival/CT8/Computational-Thinking-8/venv/lib/python3.14/site-packages/kivy/__init__.py"
+[INFO   ] Python: v3.14.3 (main, Feb 13 2026, 15:31:44) [GCC 15.2.1 20260209]
+[INFO   ] Python: Interpreter at "/home/parzival/CT8/Computational-Thinking-8/venv/bin/python3"
+[INFO   ] Logger: Purge log fired. Processing...
+[INFO   ] Logger: Purge finished!
+[INFO   ] Factory: 195 symbols loaded
+[INFO   ] Image: Providers: img_tex, img_dds, img_pil (img_ffpyplayer ignored)
+[INFO   ] Text: Providers: text_pil, text_pango 
+[CRITICAL] Window: Unable to find any valuable Window provider. Please enable debug logging (e.g. add -d if running from the command line, or change the log level in the config) and re-run your app to identify potential causes
+x11 - ModuleNotFoundError: No module named 'kivy.core.window.window_x11'
+  File "/home/parzival/CT8/Computational-Thinking-8/venv/lib/python3.14/site-packages/kivy/core/__init__.py", line 295, in core_select_lib
+    mod = importlib.__import__(name='{2}.{0}.{1}'.format(
+        basemodule, modulename, base),
+        globals=globals(),
+        locals=locals(),
+        fromlist=[modulename], level=0)
+  File "<frozen importlib._bootstrap>", line 1477, in __import__
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1335, in _find_and_load_unlocked
+
+[CRITICAL] App: Unable to get a Window, abort.
