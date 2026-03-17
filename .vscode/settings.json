@@ -27,7 +27,7 @@
     "git.useEditorAsCommitInput": false,
     "workbench.commandPalette.showAskInChat": false,
     "chat.agent.enabled": false,
-    "chat.agent.thinking.collapsedTools": "none",
+    "chat.agent.thinking.collapsedTools": "off",
     "chat.agentSessionsViewLocation": "disabled",
     "chat.allowAnonymousAccess": false,
     "chat.checkpoints.enabled": false,
