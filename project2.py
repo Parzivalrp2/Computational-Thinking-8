@@ -2,10 +2,13 @@ import time
 correct = 0
 wrong = 0
 lives = 5
+questions = 0
 def question(question,answers,timelimit, correct_ans):
     global correct
     global wrong
     global lives
+    global questions
+    questions += 1
     answers_str = ""
     for i in range(len(answers)):
         answers_str = answers_str + str(i+1) + ": " + str(answers[i]) + ", "
@@ -22,7 +25,7 @@ def question(question,answers,timelimit, correct_ans):
     else:
         wrong += 1
         lives -= 1
-    if lives == 0:
+    if lives == 0 or correct == 0 and questions > 2:
         print("You Lost :(")
     print(f"Lives: {lives}")
 
