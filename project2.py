@@ -1,4 +1,5 @@
 import time
+import sys
 correct = 0
 wrong = 0
 lives = 5
@@ -25,8 +26,10 @@ def question(question,answers,timelimit, correct_ans):
     else:
         wrong += 1
         lives -= 1
-    if lives == 0 or correct == 0 and questions > 2:
+    if lives < 1 or correct == 0 and questions > 2:
         print("You Lost :(")
+        sys.exit()
+        
     print(f"Lives: {lives}")
 
 question("who invented asymmetric encryption?", ["Whitfield Diffie","Martin Hellman","Clifford Cocks","William Jevons", "nobody"],10,[1,2,3])
@@ -34,5 +37,11 @@ question("Best?", ["Zed","VSCode","Vim","notepad++"],5,[1])
 question("Worst?", ["Apple","Microsoft","Google","Trick Question, its all"],5,[4])
 question("When did the russian revolution occur?", ["1940","1897","1963","1917","1920","1817"],10,[4])
 question("Who is the current fastest runner on the 1k", ["Usain Bolt", "Noah Ngeny", "Sebastian Coe","Gladys Lunn"],10,[2])
+question("1",[1,2],0,[1])
+question("1",[1,2],0,[1])
+question("1",[1,2],0,[1])
+question("1",[1,2],0,[1])
+question("1",[1,2],0,[1])
+question("1",[1,2],0,[1])
 
 print("You won :)")
