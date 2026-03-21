@@ -1,17 +1,13 @@
 import time
-import threading
-points = 0
+correct = 0
 wrong = 0
-
+lives = 5
 def question(question,answers,timelimit, correct_ans):
-    global points
+    global correct
     global wrong
+    global lives
     answers_str = ""
-    correct_int = []
-    for i in range(len(answers)-1):
-        for x in correct_ans:
-            if answers[i] == x:
-                correct_int.append(i+1)
+    for i in range(len(answers)):
         answers_str = answers_str + str(i+1) + ": " + str(answers[i]) + ", "
     
     timebf = time.time()
@@ -19,13 +15,21 @@ def question(question,answers,timelimit, correct_ans):
     timeaf = time.time()
     if timeaf-timebf > timelimit:
         wrong += 1
-    for i in correct_int:
-        print(i)
-        if ans == i:
-            points += 1
-            return
-    wrong += 1
+        lives -= 1
+        print("lol you took too long")
+    if ans in correct_ans:
+        correct += 1
+    else:
+        wrong += 1
+        lives -= 1
+    if lives == 0:
+        print("You Lost :(")
+    print(f"Lives: {lives}")
 
-q1 = question("what is 1", [1,2,3,4],30,[1])
+question("who invented asymmetric encryption?", ["Whitfield Diffie","Martin Hellman","Clifford Cocks","William Jevons", "nobody"],10,[1,2,3])
+question("Best?", ["Zed","VSCode","Vim","notepad++"],5,[1])
+question("Worst?", ["Apple","Microsoft","Google","Trick Question, its all"],5,[4])
+question("When did the russian revolution occur?", ["1940","1897","1963","1917","1920","1817"],10,[4])
+question("Who is the current fastest runner on the 1k", ["Usain Bolt", "Noah Ngeny", "Sebastian Coe","Gladys Lunn"],10,[2])
 
-print(f"Points: {points}, Wrong: {wrong}")
+print("You won :)")
