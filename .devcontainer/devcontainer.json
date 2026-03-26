@@ -5,7 +5,7 @@
   },
   "features": {
     "ghcr.io/devcontainers/features/desktop-lite:1": {      
-			"password": "",
+			"password": "password",
 			"webPort": "6080"
 			// "vncPort": "5901"
     }
@@ -23,7 +23,6 @@
 		"vscode": {
 			"extensions": [
         "ms-python.debugpy",
-				"streetsidesoftware.code-spell-checker"
 			]
 		}
 	},
