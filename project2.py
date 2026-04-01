@@ -37,5 +37,5 @@ question("Best?", ["Zed","VSCode","Vim","notepad++"],5,[1])
 question("Worst?", ["Apple","Microsoft","Google","Trick Question, its all"],5,[4])
 question("When did the russian revolution occur?", ["1940","1897","1963","1917","1920","1817"],10,[4])
 question("Who is the current fastest runner on the 1k", ["Usain Bolt", "Noah Ngeny", "Sebastian Coe","Gladys Lunn"],10,[2])
-
+question("Who is the current mayor of Seattle?",["Bruce Harrell", "Andrew Jackson", "Bob Ferguson", "None of the Above"],5,[])
 print("You won :)")
