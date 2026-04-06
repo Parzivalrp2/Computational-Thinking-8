@@ -23,10 +23,10 @@ def set_image(sprite, image_filename):
     screen.register_shape(image_file)
     sprite.shape(image_file)
 
-
 def create_sprite(image_filename, x=0, y=0):
     sprite = turtle.Turtle()
-    set_image(sprite, image_filename)
+    if image_filename is not None:
+        set_image(sprite, image_filename)
     sprite.penup()
     sprite.goto(x, y)
     window.update()
