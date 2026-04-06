@@ -32,6 +32,7 @@ i2 = 0
 start_time = time.time()
 
 for i in range(100):
+    # all sprites equal chances, and speed is refreshed 10 times in a race for realism
     if i == i2 + 10 or i == 0:
         speed1 = -random.randint(10,50)
         speed2 = -random.randint(10,50)
