@@ -50,6 +50,7 @@ def buy_factory():
         create_sprite("factory",factory_x,y)
 window.onkeypress(buy_factory, "e")
 
+# The goal of this game is to make as much money as possible
 # Section 3 - game loop
 window.listen()
 while True:
