@@ -51,24 +51,32 @@ def buy_factory():
 window.onkeypress(buy_factory, "e")
 
 # The goal of this game is to make as much money as possible
+last_val = 0
 # Section 3 - game loop
 window.listen()
 while True:
-    income_percent_string = "<"
+    income_percent_string = "["
     #renders progress bar
     for i in range(round(income_percent_timer) // 5 - 1):
         income_percent_string += "-"
     #Adds pacman guy
     if (round(income_percent_timer) // 5) % 2 == 0:
-        income_percent_string += "C"
-    else:
         income_percent_string += "c"
+    else:
+        income_percent_string += "C"
     for i in range(20-round(income_percent_timer) // 5):
-        income_percent_string += "#"
-    income_percent_string += ">"
+        if i % 2 == last_val:
+            income_percent_string += " "
+        else:
+            income_percent_string += "o"
+    income_percent_string += "]"
     m1.clear()
     m1.write(f"Money: ${round(money, 2)} \n Factory Price: ${round(factory_price, 2)} \n Employees: {employees} \n Employee Price: ${round(employee_price, 2)} \n Income: {income_percent_string}", font=("Courier New", 16, "normal"))
     if time.time() >= last_update + income_time - employees / 5:
+        if last_val == 1:
+            last_val = 0
+        else:
+            last_val = 1
         income_percent_timer += 5
         if income_percent_timer >= 100:
             income_percent_timer = 0
